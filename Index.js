@@ -28,3 +28,28 @@ taskcross.src = "cross.png"
 taskSection.append(taskcross)
 
 
+// create a down bar buttons
+
+const buttonSection = document.getElementById("buttonSection");
+
+const remainText = document.createElement("span")
+remainText.innerText = "2 items left"
+buttonSection.append(remainText)
+
+const buttons = document.createElement("div");
+buttonSection.append(buttons)
+
+const allBtn = document.createElement("span")
+allBtn.innerText = "All"
+buttons.append(allBtn)
+const activeBtn = document.createElement("span")
+activeBtn.innerText = "Active"
+buttons.append(activeBtn)
+const completeBtn = document.createElement("span")
+completeBtn.innerText = "Complete"
+buttons.append(completeBtn)
+
+
+const clearBtn = document.createElement("span");
+clearBtn.innerText = "Clear"
+buttonSection.append(clearBtn)

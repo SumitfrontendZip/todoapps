@@ -3,9 +3,14 @@
   margin: 0px;
   background: #e9e9e9;
 }
-h1 {
+body{
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+}
+h1{
+    margin: 40px;
 }
 #container {
     display: flex;
@@ -14,7 +19,7 @@ h1 {
     align-items: center;
     border: 1px solid black;
     padding: 10px;
-    margin: 50px 100px;
+    width: 500px;
     border-radius: 10px;
 }
 #inputsection{
@@ -25,7 +30,7 @@ h1 {
 #inputsection > input {
     height: 10px;
     padding: 10px;
-    width: 150px;
+    width: 350px;
 }
 #taskSection{
     display: flex;
@@ -34,8 +39,36 @@ h1 {
     border: 1px solid rgb(140, 140, 140);
     padding: 5px;
     text-transform: capitalize;
-    width: 210px;
+    width: 400px;
 }
 #taskSection > img{
     width: 40px;
+    cursor: pointer;
+}
+
+
+#buttonSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px;
+}
+#buttonSection > span {
+    background: #000;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: small;
+    cursor: pointer;
+    margin: 0px 40px ;
+}
+
+#buttonSection > div > span {
+    background: #000;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: small;
+    cursor: pointer;
+    margin: 0px 5px ;
 }
