@@ -31,8 +31,9 @@ input.addEventListener("keypress", (event) => {
       taskcross.src = "cross.png";
       taskSection.append(taskcross);
 
-
       taskBar.append(taskSection);
+
+      input.value = ""
     }
   });
   
