@@ -9,32 +9,33 @@ const input = document.createElement("input");
 input.placeholder = "What needs to be done";
 inputsection.append(input);
 
-// create a task bar
-const taskBar = document.createElement("div");
-taskBar.classList.add("taskbar")
+const taskBar = document.getElementById("taskBar");
 
-input.addEventListener("keypress", () => {
-  if (event.key == "Enter") {
+input.addEventListener("keypress", (event) => {
 
-    const taskSection = document.getElementById("taskSection");
+    if (event.key === "Enter") {
+      const taskSection = document.createElement("div");
+      taskSection.setAttribute("id","taskSection")
+  
+      const value = input.value;
+      
+      const checkBtn = document.createElement("img");
+      checkBtn.src = "check.png";
+      taskSection.append(checkBtn);
+      
+      const taskTitle = document.createElement("span");
+      taskTitle.innerText = value;
+      taskSection.append(taskTitle);
+      
+      const taskcross = document.createElement("img");
+      taskcross.src = "cross.png";
+      taskSection.append(taskcross);
 
-    const value = input.value;
 
-    const checkBtn = document.createElement("img");
-    checkBtn.src = "check.png";
-    taskSection.append(checkBtn);
-
-    const taskTitle = document.createElement("span");
-    taskTitle.innerText = value;
-    taskSection.append(taskTitle);
-
-    const taskcross = document.createElement("img");
-    taskcross.src = "cross.png";
-    taskSection.append(taskcross);
-
-    taskBar.append(taskSection)
-  }
-});
+      taskBar.append(taskSection);
+    }
+  });
+  
 
 // create a down bar buttons
 
