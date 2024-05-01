@@ -15,3 +15,12 @@ h1 {
     margin: 50px 100px;
     border-radius: 10px;
 }
+#inputsection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#inputsection > input {
+    height: 10px;
+    padding: 10px;
+}
