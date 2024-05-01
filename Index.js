@@ -13,7 +13,7 @@ const taskBar = document.getElementById("taskBar");
 
 input.addEventListener("keypress", (event) => {
 
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && input.value !== "") {
       const taskSection = document.createElement("div");
       taskSection.setAttribute("id","taskSection")
   

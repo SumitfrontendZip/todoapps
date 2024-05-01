@@ -31,6 +31,9 @@ h1{
     padding: 10px;
     width: 350px;
 }
+#inputsection > img{
+    transform: rotate(-90deg)
+}
 #taskBar{
     display: flex;
     flex-direction: column;
