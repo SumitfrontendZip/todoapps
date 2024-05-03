@@ -52,10 +52,11 @@ const taskFunction = (value) => {
   taskDel.addEventListener("click", () => {
     tasksection.innerHTML = "";
     tasksection.style.display = "none";
-
     itemsList = itemsList.filter(item => item !== value)
-    
-  });
+    updateItemsFun(itemsList.length)
+    console.log(itemsList)
+  },{once:true});
+
   tasksection.append(taskDel);
 
   taskBar.append(tasksection);
@@ -69,7 +70,17 @@ footerMenu.setAttribute("id", "footermenu");
 
 const countItems = document.createElement("span");
 countItems.classList.add("footerStyle");
-countItems.innerText = updateItems;
+
+const updateItemsFun = (e)=>{
+ if(e==0){
+  countItems.innerText = "0 Items"
+ }else{
+  countItems.innerText = e + " Items";
+ }
+}
+
+updateItemsFun(itemsList.length)
+
 footerMenu.append(countItems);
 
 const menuBar = document.createElement("div");
@@ -103,6 +114,6 @@ inputTag.addEventListener("keypress", (event) => {
     taskFunction(inputTag.value)
     console.log(itemsList)
     inputTag.value = ""
-    updateItems = itemsList.length
+    updateItemsFun(itemsList.length)
   }
 });
