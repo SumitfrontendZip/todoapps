@@ -1,6 +1,7 @@
 // create a array to store input value
 
 let itemsList = [];
+let isChecked = [];
 let updateItems = 0 + " Items";
 
 // Get root element and append container
@@ -33,6 +34,16 @@ container.append(inputSection);
 
 // create a function to create a tasksection
 
+const activeFunction = (isCheckedValue)=>{
+  itemsList.forEach((item)=>{
+    if(!isCheckedValue){
+      taskBar.innerHTML = ""
+      taskFunction(item)
+    }
+  })
+}
+
+
 const taskBar = document.createElement("div");
 taskBar.setAttribute("id", "taskBar");
 const taskFunction = (value) => {
@@ -41,6 +52,12 @@ const taskFunction = (value) => {
 
   const taskCkeck = document.createElement("input");
   taskCkeck.type = "checkbox";
+  isChecked = taskCkeck.checked;
+  taskCkeck.addEventListener("click",()=>{
+    isChecked = true;
+  })
+ 
+ 
   tasksection.append(taskCkeck);
 
   const taskContent = document.createElement("span");
@@ -92,9 +109,18 @@ menuBar.setAttribute("id", "menuBar");
 
 const allMenu = document.createElement("span");
 allMenu.innerText = "All";
+allMenu.addEventListener("click",()=>{
+  taskBar.innerHTML = ""
+  itemsList.forEach((item)=>{
+    taskFunction(item)
+  })
+})
 menuBar.append(allMenu);
 const activeMenu = document.createElement("span");
 activeMenu.innerText = "Active";
+activeMenu.addEventListener("click",()=>{
+  activeFunction(isChecked)
+})
 menuBar.append(activeMenu);
 const completeMenu = document.createElement("span");
 completeMenu.innerText = "Complete";
@@ -117,14 +143,15 @@ footerMenu.append(clearBtn);
 container.append(footerMenu);
 
 // logic hit the enter get the value in inputtag
-
 inputTag.addEventListener("keypress", (event) => {
   if (event.key === "Enter" && inputTag.value !== "") {
     itemsList.push(inputTag.value);
     let lastIndex = itemsList.length - 1;
+    isChecked.push(false); // Add a new element to the 'isChecked' array
     itemsList.forEach((item, index) => {
       if (index >= lastIndex) {
         taskFunction(item);
+        console.log(isChecked);
         lastIndex = index + 1;
       }
     });
