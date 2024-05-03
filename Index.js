@@ -1,7 +1,7 @@
 // create a array to store input value
 
 let itemsList = [];
-let updateItems = 0 + " Items"
+let updateItems = 0 + " Items";
 
 // Get root element and append container
 const root = document.getElementById("root");
@@ -49,13 +49,17 @@ const taskFunction = (value) => {
 
   const taskDel = document.createElement("img");
   taskDel.src = "cross.png";
-  taskDel.addEventListener("click", () => {
-    tasksection.innerHTML = "";
-    tasksection.style.display = "none";
-    itemsList = itemsList.filter(item => item !== value)
-    updateItemsFun(itemsList.length)
-    console.log(itemsList)
-  },{once:true});
+  taskDel.addEventListener(
+    "click",
+    () => {
+      tasksection.innerHTML = "";
+      tasksection.style.display = "none";
+      itemsList = itemsList.filter((item) => item !== value);
+      updateItemsFun(itemsList.length);
+      console.log(itemsList);
+    },
+    { once: true }
+  );
 
   tasksection.append(taskDel);
 
@@ -71,15 +75,15 @@ footerMenu.setAttribute("id", "footermenu");
 const countItems = document.createElement("span");
 countItems.classList.add("footerStyle");
 
-const updateItemsFun = (e)=>{
- if(e==0){
-  countItems.innerText = "0 Items"
- }else{
-  countItems.innerText = e + " Items";
- }
-}
+const updateItemsFun = (e) => {
+  if (e == 0) {
+    countItems.innerText = "0 Items";
+  } else {
+    countItems.innerText = e + " Items";
+  }
+};
 
-updateItemsFun(itemsList.length)
+updateItemsFun(itemsList.length);
 
 footerMenu.append(countItems);
 
@@ -100,6 +104,12 @@ footerMenu.append(menuBar);
 
 const clearBtn = document.createElement("span");
 clearBtn.innerText = "Clear";
+clearBtn.addEventListener("click", () => {
+  itemsList = [];
+  updateItemsFun(0);
+  taskBar.innerHTML = ""
+});
+
 clearBtn.style.cursor = "pointer";
 
 footerMenu.append(clearBtn);
@@ -111,9 +121,15 @@ container.append(footerMenu);
 inputTag.addEventListener("keypress", (event) => {
   if (event.key === "Enter" && inputTag.value !== "") {
     itemsList.push(inputTag.value);
-    taskFunction(inputTag.value)
-    console.log(itemsList)
-    inputTag.value = ""
-    updateItemsFun(itemsList.length)
+    let lastIndex = itemsList.length - 1;
+    itemsList.forEach((item, index) => {
+      if (index >= lastIndex) {
+        taskFunction(item);
+        lastIndex = index + 1;
+      }
+    });
+    console.log(itemsList);
+    inputTag.value = "";
+    updateItemsFun(itemsList.length);
   }
 });
