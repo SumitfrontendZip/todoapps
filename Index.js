@@ -1,64 +1,111 @@
-// creating a input section add a todo list
+// creating array for store value
 
-const inputsection = document.getElementById("inputsection");
-const imgBtn = document.createElement("img");
-imgBtn.src = "arrow.png";
-inputsection.append(imgBtn);
+let arr = {};
 
-const input = document.createElement("input");
-input.placeholder = "What needs to be done";
-inputsection.append(input);
+// Get root element and append container
+const root = document.getElementById("root");
 
-const taskBar = document.getElementById("taskBar");
+const todoTitle = document.createElement("h1");
+todoTitle.innerText = "Todos";
+root.append(todoTitle);
 
-input.addEventListener("keypress", (event) => {
+// create a box
 
-    if (event.key === "Enter" && input.value !== "") {
-      const taskSection = document.createElement("div");
-      taskSection.setAttribute("id","taskSection")
-  
-      const value = input.value;
-      
-      const checkBtn = document.createElement("img");
-      checkBtn.src = "check.png";
-      taskSection.append(checkBtn);
-      
-      const taskTitle = document.createElement("span");
-      taskTitle.innerText = value;
-      taskSection.append(taskTitle);
-      
-      const taskcross = document.createElement("img");
-      taskcross.src = "cross.png";
-      taskSection.append(taskcross);
+const container = document.createElement("div");
+container.setAttribute("id", "container");
+root.append(container);
 
-      taskBar.append(taskSection);
+// create input section
 
-      input.value = ""
-    }
+const inputSection = document.createElement("div");
+inputSection.setAttribute("id", "inputSection");
+
+const arrowImage = document.createElement("img");
+arrowImage.src = "arrow.png";
+inputSection.append(arrowImage);
+
+const inputTag = document.createElement("input");
+inputTag.placeholder = "what needs to be done";
+inputSection.append(inputTag);
+
+container.append(inputSection);
+
+// create a function to create a tasksection
+
+const taskBar = document.createElement("div");
+taskBar.setAttribute("id", "taskBar");
+const taskFunction = (value) => {
+  const tasksection = document.createElement("div");
+  tasksection.setAttribute("id", "tasksection");
+
+  const taskCkeck = document.createElement("input");
+  taskCkeck.type = "checkbox";
+  tasksection.append(taskCkeck);
+
+  const taskContent = document.createElement("span");
+  taskContent.innerText = value;
+  tasksection.append(taskContent);
+
+  const taskDel = document.createElement("img");
+  taskDel.src = "cross.png";
+  taskDel.addEventListener("click", () => {
+    tasksection.innerHTML = ""
+    tasksection.style.display = "none"
   });
-  
+  tasksection.append(taskDel);
 
-// create a down bar buttons
+  taskBar.append(tasksection);
+};
+container.append(taskBar);
 
-const buttonSection = document.getElementById("buttonSection");
+// create a footer menu in todos
 
-const remainText = document.createElement("span");
-remainText.innerText = "2 items left";
-buttonSection.append(remainText);
+const footerMenu = document.createElement("div");
+footerMenu.setAttribute("id", "footermenu");
 
-const buttons = document.createElement("div");
-buttonSection.append(buttons);
+const countItems = document.createElement("span");
+countItems.classList.add("footerStyle");
 
-const allBtn = document.createElement("span");
-allBtn.innerText = "All";
-buttons.append(allBtn);
-const activeBtn = document.createElement("span");
-activeBtn.innerText = "Active";
-buttons.append(activeBtn);
-const completeBtn = document.createElement("span");
-completeBtn.innerText = "Complete";
-buttons.append(completeBtn);
+countItems.innerText =  "0 items"
+const updateValue = (value) => {
+  countItems.innerText = value === 0 ?  "0 items" : value + " Items";
+};
+footerMenu.append(countItems);
+
+const menuBar = document.createElement("div");
+menuBar.setAttribute("id", "menuBar");
+
+const allMenu = document.createElement("span");
+allMenu.innerText = "All";
+menuBar.append(allMenu);
+const activeMenu = document.createElement("span");
+activeMenu.innerText = "Active";
+menuBar.append(activeMenu);
+const completeMenu = document.createElement("span");
+completeMenu.innerText = "Complete";
+menuBar.append(completeMenu);
+
+footerMenu.append(menuBar);
 
 const clearBtn = document.createElement("span");
 clearBtn.innerText = "Clear";
-buttonSection.append(clearBtn);
+clearBtn.style.cursor = "pointer";
+
+footerMenu.append(clearBtn);
+
+container.append(footerMenu);
+
+// logic hit the enter get the value in inputtag
+
+
+inputTag.addEventListener("keypress", (event) => {
+  if (event.key === "Enter" && inputTag.value !== "") {
+    arr[inputTag.value] = taskFunction(inputTag.value);
+    const size = Object.keys(arr).length;
+    updateValue(size)
+    console.log(arr)
+    inputTag.value = ""
+  }
+});
+
+
