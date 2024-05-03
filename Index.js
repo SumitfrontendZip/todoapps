@@ -1,6 +1,7 @@
-// creating array for store value
+// create a array to store input value
 
-let arr = {};
+let itemsList = [];
+let updateItems = 0 + " Items"
 
 // Get root element and append container
 const root = document.getElementById("root");
@@ -49,8 +50,11 @@ const taskFunction = (value) => {
   const taskDel = document.createElement("img");
   taskDel.src = "cross.png";
   taskDel.addEventListener("click", () => {
-    tasksection.innerHTML = ""
-    tasksection.style.display = "none"
+    tasksection.innerHTML = "";
+    tasksection.style.display = "none";
+
+    itemsList = itemsList.filter(item => item !== value)
+    
   });
   tasksection.append(taskDel);
 
@@ -65,11 +69,7 @@ footerMenu.setAttribute("id", "footermenu");
 
 const countItems = document.createElement("span");
 countItems.classList.add("footerStyle");
-
-countItems.innerText =  "0 items"
-const updateValue = (value) => {
-  countItems.innerText = value === 0 ?  "0 items" : value + " Items";
-};
+countItems.innerText = updateItems;
 footerMenu.append(countItems);
 
 const menuBar = document.createElement("div");
@@ -97,15 +97,12 @@ container.append(footerMenu);
 
 // logic hit the enter get the value in inputtag
 
-
 inputTag.addEventListener("keypress", (event) => {
   if (event.key === "Enter" && inputTag.value !== "") {
-    arr[inputTag.value] = taskFunction(inputTag.value);
-    const size = Object.keys(arr).length;
-    updateValue(size)
-    console.log(arr)
+    itemsList.push(inputTag.value);
+    taskFunction(inputTag.value)
+    console.log(itemsList)
     inputTag.value = ""
+    updateItems = itemsList.length
   }
 });
-
-
