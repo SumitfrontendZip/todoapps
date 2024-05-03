@@ -1,7 +1,6 @@
 // create a array to store input value
 
 let itemsList = [];
-let isChecked = [];
 let updateItems = 0 + " Items";
 
 // Get root element and append container
@@ -34,16 +33,6 @@ container.append(inputSection);
 
 // create a function to create a tasksection
 
-const activeFunction = (isCheckedValue)=>{
-  itemsList.forEach((item)=>{
-    if(!isCheckedValue){
-      taskBar.innerHTML = ""
-      taskFunction(item)
-    }
-  })
-}
-
-
 const taskBar = document.createElement("div");
 taskBar.setAttribute("id", "taskBar");
 const taskFunction = (value) => {
@@ -52,12 +41,7 @@ const taskFunction = (value) => {
 
   const taskCkeck = document.createElement("input");
   taskCkeck.type = "checkbox";
-  isChecked = taskCkeck.checked;
-  taskCkeck.addEventListener("click",()=>{
-    isChecked = true;
-  })
- 
- 
+  taskCkeck.classList.add("taskCheckbox");
   tasksection.append(taskCkeck);
 
   const taskContent = document.createElement("span");
@@ -69,23 +53,46 @@ const taskFunction = (value) => {
   taskDel.addEventListener(
     "click",
     () => {
-      tasksection.innerHTML = "";
+      tasksection.remove();
       tasksection.style.display = "none";
       itemsList = itemsList.filter((item) => item !== value);
       updateItemsFun(itemsList.length);
-      console.log(itemsList);
     },
     { once: true }
   );
 
   tasksection.append(taskDel);
 
+
   taskBar.append(tasksection);
+  return tasksection;
 };
 container.append(taskBar);
 
 // create a footer menu in todos
 
+
+// Function to filter tasks based on the filter type
+const filterTasks = (filterType) => {
+  const taskSections = document.querySelectorAll("#tasksection");
+  taskSections.forEach((taskSection) => {
+    const taskCheck = taskSection.querySelector(".taskCheckbox");
+    const isChecked = taskCheck.checked;
+    switch (filterType) {
+      case "all":
+        taskSection.style.display = "flex";
+        break;
+      case "active":
+        taskSection.style.display = isChecked ? "none" : "flex";
+        break;
+      case "complete":
+        taskSection.style.display = isChecked ? "flex" : "none";
+        break;
+      default:
+        break;
+    }
+  });
+};
 const footerMenu = document.createElement("div");
 footerMenu.setAttribute("id", "footermenu");
 
@@ -109,21 +116,24 @@ menuBar.setAttribute("id", "menuBar");
 
 const allMenu = document.createElement("span");
 allMenu.innerText = "All";
-allMenu.addEventListener("click",()=>{
-  taskBar.innerHTML = ""
-  itemsList.forEach((item)=>{
-    taskFunction(item)
-  })
-})
+allMenu.addEventListener("click", () => {
+ filterTasks("all")
+});
+
+
 menuBar.append(allMenu);
 const activeMenu = document.createElement("span");
 activeMenu.innerText = "Active";
-activeMenu.addEventListener("click",()=>{
-  activeFunction(isChecked)
-})
+activeMenu.addEventListener("click", ()=>{
+  filterTasks("active")
+});
+
 menuBar.append(activeMenu);
 const completeMenu = document.createElement("span");
 completeMenu.innerText = "Complete";
+completeMenu.addEventListener("click",()=>{
+  filterTasks("complete")
+})
 menuBar.append(completeMenu);
 
 footerMenu.append(menuBar);
@@ -133,7 +143,7 @@ clearBtn.innerText = "Clear";
 clearBtn.addEventListener("click", () => {
   itemsList = [];
   updateItemsFun(0);
-  taskBar.innerHTML = ""
+  taskBar.innerHTML = "";
 });
 
 clearBtn.style.cursor = "pointer";
@@ -147,11 +157,9 @@ inputTag.addEventListener("keypress", (event) => {
   if (event.key === "Enter" && inputTag.value !== "") {
     itemsList.push(inputTag.value);
     let lastIndex = itemsList.length - 1;
-    isChecked.push(false); // Add a new element to the 'isChecked' array
     itemsList.forEach((item, index) => {
       if (index >= lastIndex) {
         taskFunction(item);
-        console.log(isChecked);
         lastIndex = index + 1;
       }
     });
